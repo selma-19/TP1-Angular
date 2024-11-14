@@ -31,7 +31,7 @@
         <a
           class="nav-link"
           [routerLinkActiveOptions]="{ exact: true }"
-          [routerLink]="['cv']"
+          [routerLink]="[APP_ROUTES.cv]"
           routerLinkActive="active text-primary"
           >Cv</a
         >
@@ -69,9 +69,16 @@
         <a
           *ngIf="!authService.stateIsAuthenticated()"
           class="nav-link"
-          [routerLink]="['login']"
+          [routerLink]="[APP_ROUTES.login]"
           routerLinkActive="active text-primary"
           >Login</a
+        >
+        <a
+          *ngIf="!authService.stateIsAuthenticated()"
+          class="nav-link"
+          [routerLink]="[APP_ROUTES.ttc]"
+          routerLinkActive="active text-primary"
+        >Login</a
         >
         <a
           *ngIf="authService.stateIsAuthenticated()"
