@@ -3,7 +3,7 @@ import { AuthService } from '../../auth/services/auth.service';
 import { Router, RouterLinkActive, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { APP_ROUTES } from '../../../config/routes.config';
-import {NgIf} from "@angular/common";
+
 
 
 @Component({
@@ -13,9 +13,8 @@ import {NgIf} from "@angular/common";
     standalone: true,
   imports: [
     RouterLinkActive,
-    RouterLink,
-    NgIf
-  ],
+    RouterLink
+],
 })
 export class NavbarComponent {
   authService = inject(AuthService);
