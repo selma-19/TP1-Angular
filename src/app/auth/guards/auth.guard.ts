@@ -17,10 +17,6 @@ export class AuthGuard implements CanActivate {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -30,7 +26,7 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!this.authService.isAuthenticated()) {
+    if (!this.authService.stateIsAuthenticated()) {
       this.router.navigate([APP_ROUTES.login]);
       return false;
     }
