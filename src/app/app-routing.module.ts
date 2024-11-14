@@ -14,6 +14,7 @@ import { DetailsCvComponent } from "./cv/details-cv/details-cv.component";
 import { RhComponent } from "./optimizationPattern/rh/rh.component";
 import {TTCComponent} from "./components/ttc/ttc.component";
 import {APP_ROUTES} from "../config/routes.config";
+import {RainbowComponent} from "./components/rainbow/rainbow.component";
 
 const routes: Route[] = [
   { path: APP_ROUTES.login, component: LoginComponent },
@@ -38,6 +39,7 @@ const routes: Route[] = [
     children: [{ path: APP_ROUTES.color, component: ColorComponent }],
   },
   { path: APP_ROUTES.ttc, component: TTCComponent },
+  { path: APP_ROUTES.rainbow, component: RainbowComponent },
   { path: APP_ROUTES.notFound, component: NF404Component },
 ];
 

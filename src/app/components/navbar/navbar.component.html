@@ -38,19 +38,19 @@
         <a
           *ngIf="authService.stateIsAuthenticated()"
           class="nav-link"
-          [routerLink]="['cv/add']"
+          [routerLink]="[APP_ROUTES.addCv]"
           routerLinkActive="active text-primary"
           >Add Cv</a
         >
         <a
           class="nav-link"
-          [routerLink]="['todo']"
+          [routerLink]="[APP_ROUTES.todo]"
           routerLinkActive="active text-primary"
           >Todo</a
         >
         <a
           class="nav-link"
-          [routerLink]="['word']"
+          [routerLink]="[APP_ROUTES.word]"
           routerLinkActive="active text-primary"
           >Word</a
         >
@@ -71,15 +71,17 @@
           class="nav-link"
           [routerLink]="[APP_ROUTES.login]"
           routerLinkActive="active text-primary"
-          >Login</a
-        >
+          >Login</a>
         <a
-          *ngIf="!authService.stateIsAuthenticated()"
           class="nav-link"
           [routerLink]="[APP_ROUTES.ttc]"
           routerLinkActive="active text-primary"
-        >Login</a
-        >
+        >TTC</a>
+        <a
+          class="nav-link"
+          [routerLink]="[APP_ROUTES.rainbow]"
+          routerLinkActive="active text-primary"
+        >Rainbow</a>
         <a
           *ngIf="authService.stateIsAuthenticated()"
           class="nav-link"

@@ -10,5 +10,6 @@ export const APP_ROUTES = {
   addCv: 'cv/add',
   notFound: "**",
   front: "",
-  cvDetails:"cv/:id"
+  cvDetails:"cv/:id",
+  rainbow: "rainbow"
 };
