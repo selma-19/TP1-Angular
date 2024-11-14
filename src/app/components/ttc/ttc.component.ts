@@ -1,5 +1,6 @@
-import {Component, computed, signal} from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import {FormsModule} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-ttc',
@@ -11,6 +12,8 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './ttc.component.css'
 })
 export class TTCComponent {
+  private router = inject(Router);
+
   VAT = signal(18);
   quantity = signal(1);
   HT = signal(0)

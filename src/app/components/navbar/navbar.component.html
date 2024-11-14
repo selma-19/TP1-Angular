@@ -26,15 +26,12 @@
             [routerLink]="['']"
             [routerLinkActiveOptions]="{ exact: true }"
             routerLinkActive="active text-primary"
-            >Home</a
-            >
-            <a
-              class="nav-link"
+            >Home</a>
+            <a class="nav-link"
               [routerLinkActiveOptions]="{ exact: true }"
-              [routerLink]="['cv']"
+              [routerLink]="[APP_ROUTES.cv]"
               routerLinkActive="active text-primary"
-              >Cv</a
-              >
+              >Cv</a>
               @if (authService.isAuthenticated()) {
                 <a
                   class="nav-link"
@@ -82,6 +79,12 @@
                               >Logout</a
                               >
                             }
+          <a
+            class="nav-link"
+            [routerLink]="['ttc']"
+            routerLinkActive="active text-primary"
+          >TTC</a
+          >
                           </div>
                         </div>
                       </div>
