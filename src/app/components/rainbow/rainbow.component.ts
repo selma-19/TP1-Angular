@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {Router, RouterOutlet} from "@angular/router";
 import {NavbarComponent} from "../navbar/navbar.component";
 import {FormsModule} from "@angular/forms";
-import {RainbowDirective} from "../../directives/rainbow-directive.directive";
+import {RainbowDirective} from "../../directives/rainbow/rainbow-directive.directive";
 
 @Component({
   selector: 'app-rainbow',

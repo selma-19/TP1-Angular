@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {ReactiveFormsModule} from "@angular/forms";
-import {RainbowDirective} from "../../directives/rainbow-directive.directive";
+import {RainbowDirective} from "../../directives/rainbow/rainbow-directive.directive";
 
 @Component({
     selector: 'app-front',

@@ -3,28 +3,28 @@
 
   <div class="input-group">
     <label for="priceHT">Prix HT</label>
-    <input type="number" id="priceHT" [value]="HT()" [(ngModel)]="HT" />
+    <input type="number" id="priceHT" [(ngModel)]="HT" />
   </div>
 
   <div class="input-group">
     <label for="quantity">Quantité</label>
-    <input type="number" id="quantity" [value]="quantity()" [(ngModel)]="quantity" />
+    <input type="number" id="quantity" [(ngModel)]="quantity" />
   </div>
 
   <div class="input-group">
     <label for="tva">VAT</label>
-    <input type="number" id="tva" [value]="VAT()" [(ngModel)]="VAT" />
+    <input type="number" id="tva" [(ngModel)]="VAT" />
   </div>
 
   <div class="result-container">
     <div class="result-box blue">
-      <p>Prix unitaire TTC : {{ this.unitTTC() }} </p>
+      <p>Prix unitaire TTC : {{ this.unitTTC() | currency }} </p>
     </div>
     <div class="result-box green">
-      <p>Prix total TTC : {{ TTC() }}</p>
+      <p>Prix total TTC : {{ TTC() | currency }}</p>
     </div>
     <div class="result-box red">
-      <p>Discount : {{ discount() }} </p>
+      <p>Discount : {{ discount() | currency }} </p>
     </div>
   </div>
 </div>

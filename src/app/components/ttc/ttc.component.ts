@@ -1,12 +1,14 @@
 import {Component, computed, inject, signal} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-ttc',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    CurrencyPipe
   ],
   templateUrl: './ttc.component.html',
   styleUrl: './ttc.component.css'
@@ -16,7 +18,7 @@ export class TTCComponent {
 
   VAT = signal(18);
   quantity = signal(1);
-  HT = signal(0)
+  HT = signal(0);
 
   unitTTC = computed(() => {
     const discount = this.getDiscount();

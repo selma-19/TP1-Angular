@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import {TTCComponent} from "./components/ttc/ttc.component";
 import { TodoComponent } from './todo/todo/todo.component';
 import {FormsModule} from "@angular/forms";
-import {RainbowDirective} from "./directives/rainbow-directive.directive";
+import {RainbowDirective} from "./directives/rainbow/rainbow-directive.directive";
 
 @Component({
     selector: 'app-root',
