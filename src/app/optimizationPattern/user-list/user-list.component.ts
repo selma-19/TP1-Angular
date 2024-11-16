@@ -24,6 +24,7 @@ export const fibonnaci = (n: number): number => {
 })
 export class UserListComponent {
   @Input() usersCluster: string = '';
+  @Input() type: string = '';
   @Input() users: User[] = [];
   @Output() add = new EventEmitter<string>();
   userFullName: string = '';
@@ -35,5 +36,9 @@ export class UserListComponent {
     const fib = fibonnaci(n);
 
     return fib;
+  }
+
+  ngDoCheck() {
+    console.log(this.type)
   }
 }

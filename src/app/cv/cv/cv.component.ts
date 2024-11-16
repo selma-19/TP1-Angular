@@ -47,6 +47,6 @@ export class CvComponent {
     });
     this.logger.logger("je suis le cvComponent");
     this.toastr.info("Bienvenu dans notre CvTech");
-    this.cvService.selectCv$.subscribe((cv) => (this.selectedCv = cv));
+    this.selectedCv = this.cvService.selectedCv();
   }
 }
