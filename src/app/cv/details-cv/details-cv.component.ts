@@ -7,7 +7,7 @@ import {APP_ROUTES} from '../../../config/routes.config';
 import {AuthService} from '../../auth/services/auth.service';
 
 import {DefaultImagePipe} from '../pipes/default-image.pipe';
-import {catchError, EMPTY, Observable} from "rxjs";
+import {catchError, EMPTY, Observable, tap} from "rxjs";
 import {AsyncPipe} from "@angular/common";
 
 @Component({
@@ -39,14 +39,13 @@ export class DetailsCvComponent implements OnInit {
   }
 
   deleteCv(cv: Cv) {
-    this.cvService.deleteCvById(cv.id).pipe(catchError(() => {
+    let delete$ = this.cvService.deleteCvById(cv.id).pipe(tap(() => {
+      this.toastr.success(`${cv.name} supprimé avec succès`);
+      this.router.navigate([APP_ROUTES.cv]);
+    }), catchError(() => {
       this.toastr.error(`Problème avec le serveur veuillez contacter l'admin`);
       return EMPTY;
-    })).subscribe({
-      next: () => {
-        this.toastr.success(`${cv.name} supprimé avec succès`);
-        this.router.navigate([APP_ROUTES.cv]);
-      },
-    });
+    }));
+    delete$.subscribe();
   }
 }
