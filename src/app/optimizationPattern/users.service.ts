@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal } from '@angular/core';
 import { faker } from '@faker-js/faker';
 export interface User {
   name: string,
@@ -20,10 +20,10 @@ export class UsersService {
   getOddOrEven(isOdd = false): User[] {
     return this.users.filter((user) => !!(user.age % 2) == isOdd );
   }
-  addUser(list: User[], name: string) {
-    list.unshift({
+  addUser(list: WritableSignal<User[]>, name: string) {
+    list.update(oldVal => [{
       name,
       age: faker.datatype.number({min: 18, max: 30})
-    });
+    }, ...oldVal]);
   }
 }

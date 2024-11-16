@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from "@angular/core";
+import { Component, Input, OnInit, inject, signal } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
@@ -16,7 +16,7 @@ export class ColorComponent implements OnInit {
    *
    * The color representing the Div
    */
-  divColor = "";
+  divColor = signal("");
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
@@ -33,10 +33,10 @@ export class ColorComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("In ngOnInit", this.defaultColor);
-    this.divColor = this.defaultColor;
+    this.divColor.set(this.defaultColor);
   }
 
   changeColor(newColor: string) {
-    this.divColor = newColor;
+    this.divColor.set(newColor);
   }
 }

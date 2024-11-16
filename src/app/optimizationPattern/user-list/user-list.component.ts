@@ -2,12 +2,17 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {User} from "../users.service";
 import { FormsModule } from '@angular/forms';
 
-
+const fibHashSet: any = {};
 export const fibonnaci = (n: number): number => {
   if (n==1 || n==0) {
     return 1;
   }
-  return fibonnaci(n-1) + fibonnaci(n-2);
+  if(fibHashSet[n.toString()])
+    return fibHashSet[n.toString()];
+  
+  const fibNumber = fibonnaci(n-1) + fibonnaci(n-2);
+  fibHashSet[n.toString()] = fibNumber;
+  return fibNumber;
 }
 
 @Component({
@@ -28,7 +33,6 @@ export class UserListComponent {
   }
   fibo(n: number): number {
     const fib = fibonnaci(n);
-    console.log({n, fib});
 
     return fib;
   }
