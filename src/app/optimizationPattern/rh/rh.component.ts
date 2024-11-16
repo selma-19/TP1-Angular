@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, WritableSignal, effect, inject, signal } from '@angular/core';
 import {User, UsersService} from "../users.service";
 import * as ChartJs from 'chart.js/auto';
 import { UserListComponent } from '../user-list/user-list.component';
@@ -12,27 +12,30 @@ import { UserListComponent } from '../user-list/user-list.component';
 export class RhComponent implements OnInit {
   private userService = inject(UsersService);
 
-  oddUsers: User[];
-  evenUsers: User[];
+  oddUsers: WritableSignal<User[]>;
+  evenUsers: WritableSignal<User[]>;
   chart: any;
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
   constructor() {
-    this.oddUsers = this.userService.getOddOrEven(true);
-    this.evenUsers = this.userService.getOddOrEven();
+    this.oddUsers = signal(this.userService.getOddOrEven(true));
+    this.evenUsers = signal(this.userService.getOddOrEven());
+    effect(() => {
+      this.updateChart();
+    })
   }
 
   ngOnInit(): void {
         this.createChart();
     }
-  addUser(list: User[], newUser: string) {
+  addUser(list: WritableSignal<User[]>, newUser: string) {
     this.userService.addUser(list, newUser);
   }
   createChart(){
     const data = [
-      { users: 'Workers', count: this.oddUsers.length },
-      { users: 'Boss', count: this.evenUsers.length },
+      { users: 'Workers', count: this.oddUsers().length },
+      { users: 'Boss', count: this.evenUsers().length },
     ];
     this.chart = new ChartJs.Chart("MyChart",
     {
@@ -47,5 +50,15 @@ export class RhComponent implements OnInit {
       ]
     }
     });
+  }
+
+  updateChart(): void {
+    const data = [
+      { users: 'Workers', count: this.oddUsers().length },
+      { users: 'Boss', count: this.evenUsers().length },
+    ];
+    this.chart.data.labels = data.map(row => row.users);
+    this.chart.data.datasets[0].data = data.map(row => row.count);
+    this.chart.update();
   }
 }
