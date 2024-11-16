@@ -6,7 +6,9 @@ import { CONSTANTES } from '../../../config/const.config';
     standalone: true,
 })
 export class DefaultImagePipe implements PipeTransform {
-  transform(path: string): string {
+  transform(path?: string): string {
+    if(!path)
+      return "";
     if (!path.trim()) return CONSTANTES.defaultImage;
     return path;
   }

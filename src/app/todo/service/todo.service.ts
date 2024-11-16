@@ -1,6 +1,7 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Todo } from '../model/todo';
 import { LoggerService } from '../../services/logger.service';
+import { TodoStatus } from '../model/todo.types';
 
 let n = 1;
 
@@ -10,11 +11,7 @@ let n = 1;
 export class TodoService {
   private loggerService = inject(LoggerService);
 
-  private todos: Todo[] = [];
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-  constructor() {}
+  private todos = signal<Todo[]>([]);
 
   /**
    * elle retourne la liste des todos
@@ -22,7 +19,9 @@ export class TodoService {
    * @returns Todo[]
    */
   getTodos(): Todo[] {
-    return this.todos;
+    console.log(this.todos())
+    return this.todos();
+    
   }
 
   /**
@@ -32,7 +31,7 @@ export class TodoService {
    *
    */
   addTodo(todo: Todo): void {
-    this.todos.push(todo);
+    this.todos.update(todos => [...todos, todo]);
   }
 
   /**
@@ -41,10 +40,12 @@ export class TodoService {
    * @param todo: Todo
    * @returns boolean
    */
-  deleteTodo(todo: Todo): boolean {
-    const index = this.todos.indexOf(todo);
+  deleteTodo(todo: Todo) {
+    const index = this.todos().indexOf(todo);
+    console.log(todo)
     if (index > -1) {
-      this.todos.splice(index, 1);
+      this.todos.set( [...this.todos().slice(0, index), ...this.todos().slice(index + 1)]);
+      console.log(this.todos());
       return true;
     }
     return false;
@@ -55,5 +56,10 @@ export class TodoService {
    */
   logTodos() {
     this.loggerService.logger(this.todos);
+  }
+
+
+  changeTodoStatus(todo:Todo, newStatus: TodoStatus) {
+    todo.status.set(newStatus);
   }
 }

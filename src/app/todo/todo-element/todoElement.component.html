@@ -1,0 +1,10 @@
+<div style="display:flex; align-items :center; justify-content: space-evenly; font-size: large;">
+    <h5>{{ todo.name }} : {{ todo.content }}</h5>
+    <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i>
+    <i *ngIf="todo.status() ==='done' ||todo.status() === 'in progress'"
+          (click)="changeToPreviousStatus(todo)" class="fa fa-arrow-left" style="color: green;" aria-hidden="true">
+      </i>
+    <i *ngIf="todo.status() === 'waiting' || todo.status() === 'in progress'" 
+    (click)="changeToNextStatus(todo)" class="fa fa-arrow-right" style="color: green;" aria-hidden="true">
+    </i>
+  </div>

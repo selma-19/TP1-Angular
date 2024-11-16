@@ -1,0 +1,33 @@
+  
+  .todoBox {
+    background-color: #f4f4f4; 
+    padding: 10px;
+    border-radius: 8px;
+    margin-right: 20px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 400px; 
+    height: 60px; 
+  }
+  
+  .inProgress {
+    background-color: #ffcccc; 
+  }
+  
+  .waiting {
+    background-color: #ffcc80; }
+  
+  .done {
+    background-color: #a8e6cf;}
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    box-sizing: border-box;
+  }
+  
