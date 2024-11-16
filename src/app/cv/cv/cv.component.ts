@@ -28,7 +28,8 @@ export class CvComponent {
   constructor(...args: unknown[]);
 
   constructor() {
-    this.cvs$ = this.cvService.getCvs().pipe(catchError(() => {
+    this.cvs$ = this.cvService.getCvs().pipe(
+      catchError(() => {
       this.toastr.error(`
                 Attention!! Les données sont fictives, problème avec le serveur.
                 Veuillez contacter l'admin.`);
@@ -39,3 +40,4 @@ export class CvComponent {
     this.selectedCv$ = this.cvService.selectCv$;
   }
 }
+
