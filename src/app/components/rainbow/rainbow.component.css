@@ -1,0 +1,12 @@
+.rainbow-container {
+  text-align: center;
+  padding: 10px;
+}
+
+input{
+  padding: 8px;
+  font-size: 14px;
+  border: 5px solid ;
+  border-radius: 4px;
+  transition: border-color 0.2s;
+}

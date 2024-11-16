@@ -40,7 +40,9 @@ export class DetailsCvComponent implements OnInit {
         },
       });
   }
-  deleteCv(cv: Cv) {
+  deleteCv(cv?: Cv|null) {
+    if(cv==null)
+      return;
     this.cvService.deleteCvById(cv.id).subscribe({
       next: () => {
         this.toastr.success(`${cv.name} supprimé avec succès`);
