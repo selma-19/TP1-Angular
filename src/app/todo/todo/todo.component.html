@@ -1,18 +1,15 @@
-<div class="row">
-  <div class="col">
-    <ol class="list-group">
-      @for (todo of todos; track todo) {
-        <li class="list-group-item">
-          {{todo.name}} : {{todo.content}}
-          <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i>
-        </li>
-      }
-    </ol>
-  </div>
-  <div class="col">
+<div class="row" style="display: flex;">
+  <div class="row">
     name: <input [(ngModel)]="todo.name" type="text" class="form-control">
     content: <input [(ngModel)]="todo.content" type="text" class="form-control">
     <button (click)="addTodo()" [disabled]="!todo.name.trim() || !todo.content.trim()"
     class="btn btn-primary m-2">add</button>
   </div>
+  
+  <div style="display: flex; margin-top: 50px;">
+    <app-todo-list [todos]="waitingTodos()" [status]="'waiting'"></app-todo-list>
+    <app-todo-list [todos]="inProgressTodos()" [status]="'in progress'"></app-todo-list>
+    <app-todo-list [todos]="doneTodos()" [status]="'done'"></app-todo-list>
+  </div>
+
 </div>

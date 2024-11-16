@@ -1,0 +1,11 @@
+<h2 class="todoBox" [ngClass]="{
+    'waiting' : status==='waiting',
+    'inProgress' : status==='in progress',
+    'done' : status==='done',
+}">
+    {{status}} Todos</h2>
+<ul>
+  <li *ngFor="let todo of todos">
+    <app-todo-element [todo]="todo" (statusChange)="onStatusChange(todo,$event)"></app-todo-element>
+  </li>
+</ul>
