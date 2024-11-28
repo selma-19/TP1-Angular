@@ -1,5 +1,3 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
 
 import { AuthInterceptorProvider } from './app/auth/interceptors/auth.interceptor';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -11,6 +9,7 @@ import { AppRoutingModule } from './app/app-routing.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { isDevMode, importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 bootstrapApplication(AppComponent, {
@@ -25,7 +24,7 @@ bootstrapApplication(AppComponent, {
         })),
         AuthInterceptorProvider,
         provideHttpClient(withInterceptorsFromDi()),
-        provideAnimations(),
+        provideAnimations(), provideAnimationsAsync(),
     ]
 })
   .catch(err => console.error(err));
