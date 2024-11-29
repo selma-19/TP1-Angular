@@ -12,6 +12,8 @@ import { AddCvComponent } from "./cv/add-cv/add-cv.component";
 import { CvComponent } from "./cv/cv/cv.component";
 import { DetailsCvComponent } from "./cv/details-cv/details-cv.component";
 import { RhComponent } from "./optimizationPattern/rh/rh.component";
+import {cvResolver} from "./cv/cv/cv-resolver";
+import { ProductsComponent } from "./products/products.component";
 
 const routes: Route[] = [
   { path: "login", component: LoginComponent },
@@ -19,6 +21,7 @@ const routes: Route[] = [
   {
     path: "cv",
     component: CvComponent,
+    resolve:{cvs:cvResolver}
   },
   { path: "cv/add", component: AddCvComponent, canActivate: [AuthGuard] },
   { path: "cv/:id", component: DetailsCvComponent },
@@ -35,7 +38,9 @@ const routes: Route[] = [
     component: AdminComponent,
     children: [{ path: "color", component: ColorComponent }],
   },
+  { path: "products", component: ProductsComponent },
   { path: "**", component: NF404Component },
+
 ];
 
 @NgModule({

@@ -7,7 +7,8 @@ import {ListComponent} from "../list/list.component";
 import {CvCardComponent} from "../cv-card/cv-card.component";
 import {EmbaucheComponent} from "../embauche/embauche.component";
 import {AsyncPipe, DatePipe, UpperCasePipe} from "@angular/common";
-import {catchError, Observable, of} from "rxjs";
+import {BehaviorSubject, map, Observable, tap} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: "app-cv",
@@ -19,25 +20,26 @@ import {catchError, Observable, of} from "rxjs";
 export class CvComponent {
   cvs$: Observable<Cv[]>;
   selectedCv$: Observable<Cv>;
+  loading$=new BehaviorSubject<boolean>(true)
   date = new Date();
   private logger = inject(LoggerService);
   private toastr = inject(ToastrService);
   private cvService = inject(CvService);
+  private route=inject(ActivatedRoute)
+
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
 
   constructor() {
-    this.cvs$ = this.cvService.getCvs().pipe(
-      catchError(() => {
-      this.toastr.error(`
-                Attention!! Les données sont fictives, problème avec le serveur.
-                Veuillez contacter l'admin.`);
-      return of(this.cvService.getFakeCvs());
-    }));
+    this.cvs$ = this.route.data.pipe(
+      map((data) => data['cvs']),
+      tap(()=>this.loading$.next(false))
+    );
     this.logger.logger("je suis le cvComponent");
     this.toastr.info("Bienvenu dans notre CvTech");
     this.selectedCv$ = this.cvService.selectCv$;
+    //TODO: seperate junior and senior cvs
   }
 }
 
