@@ -6,21 +6,25 @@ import { CvService } from "../services/cv.service";
 import { ListComponent } from "../list/list.component";
 import { CvCardComponent } from "../cv-card/cv-card.component";
 import { EmbaucheComponent } from "../embauche/embauche.component";
-import { UpperCasePipe, DatePipe } from "@angular/common";
+import {UpperCasePipe, DatePipe, AsyncPipe} from "@angular/common";
 import { AutocompleteComponent } from "../autocomplete/autocomplete.component";
+import {RouterOutlet} from "@angular/router";
+import {Observable} from "rxjs";
 @Component({
     selector: "app-cv",
     templateUrl: "./cv.component.html",
     styleUrls: ["./cv.component.css"],
     standalone: true,
-    imports: [
+  imports: [
     ListComponent,
     CvCardComponent,
     EmbaucheComponent,
     UpperCasePipe,
     DatePipe,
-    AutocompleteComponent
-],
+    AutocompleteComponent,
+    RouterOutlet,
+    AsyncPipe
+  ],
 })
 export class CvComponent {
   private logger = inject(LoggerService);
@@ -28,7 +32,7 @@ export class CvComponent {
   private cvService = inject(CvService);
 
   cvs: Cv[] = [];
-  selectedCv: Cv | null = null;
+  selectedCv$: Observable<Cv>;
   /*   selectedCv: Cv | null = null; */
   date = new Date();
 
@@ -49,6 +53,6 @@ export class CvComponent {
     });
     this.logger.logger("je suis le cvComponent");
     this.toastr.info("Bienvenu dans notre CvTech");
-    this.selectedCv = this.cvService.selectedCv();
+    this.selectedCv$ = this.cvService.selectCv$;
   }
 }

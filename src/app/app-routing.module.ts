@@ -4,13 +4,20 @@ import { LoginComponent } from "./auth/login/login.component";
 import { NF404Component } from "./components/nf404/nf404.component";
 import {APP_ROUTES} from "../config/routes.config";
 import { AuthGuard } from "./auth/guards/auth.guard";
+import {MasterDetailsCvComponent} from "./cv/master-details-cv/master-details-cv.component";
+import {DetailsCvComponent} from "./cv/details-cv/details-cv.component";
 
 
 const routes: Route[] = [
   { path: APP_ROUTES.login, component: LoginComponent },
   { path: APP_ROUTES.rh, loadComponent: () => import('./optimizationPattern/rh/rh.component').then(m => m.RhComponent), },
-  { 
-    path: "cv", 
+  {path:"cv/list",component:MasterDetailsCvComponent,children:
+      [
+        {path:":id",component:DetailsCvComponent}
+      ]
+  },
+  {
+    path: "cv",
     loadChildren: () => import("./cv/cv.routes").then(m => m.CV_ROUTES)
   },
   {
@@ -21,8 +28,8 @@ const routes: Route[] = [
       { path: APP_ROUTES.word, loadComponent: () => import('./directives/mini-word/mini-word.component').then(m => m.MiniWordComponent) },
     ],
   },
-  { 
-    path: "admin", 
+  {
+    path: "admin",
     canActivate: [AuthGuard],
     loadChildren: () => import("./templates/admin/admin.routes").then(m => m.ADMIN_ROUTES)
   },
