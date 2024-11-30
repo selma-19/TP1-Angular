@@ -3,10 +3,34 @@
     <div class="alert alert-warning">
       {{ date | date : "full" | uppercase }}
     </div>
-    <app-list [cvs]="cvs$ |async "></app-list>
   </div>
-  <div class="col">
-    <app-cv-card [cv]="selectedCv$ | async"></app-cv-card>
+  
+  <div class="row">
+    <div class="col-6">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" id="juniors-tab" data-bs-toggle="tab" href="#juniors">
+            Juniors
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="seniors-tab" data-bs-toggle="tab" href="#seniors">
+            Seniors
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="juniors">
+          <app-list [cvs]="juniors$ | async"></app-list>
+        </div>
+        <div class="tab-pane fade" id="seniors">
+          <app-list [cvs]="seniors$ | async"></app-list>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <app-cv-card [cv]="selectedCv$ | async"></app-cv-card>
+    </div>
   </div>
-</div>
+
 <app-embauche></app-embauche>

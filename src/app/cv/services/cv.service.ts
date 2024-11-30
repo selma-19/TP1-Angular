@@ -1,6 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { Cv } from "../model/cv";
-import { Observable, Subject } from "rxjs";
+import { BehaviorSubject, EMPTY, Observable, Subject, of, shareReplay, take, tap } from "rxjs";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { API } from "../../../config/api.config";
 
@@ -9,7 +9,7 @@ import { API } from "../../../config/api.config";
 })
 export class CvService {
   private http = inject(HttpClient);
-
+  private cvs$: Observable<Cv[]> | null = null;
   private cvs: Cv[] = [];
   /**
    * Le subject permettant de créer le flux des cvs sélectionnés
@@ -20,7 +20,11 @@ export class CvService {
    */
   selectCv$ = this.#selectCvSuject$.asObservable();
 
+  /*private cvsSubject = new BehaviorSubject<Cv[]>([]);
+  cvs$ = this.cvsSubject.asObservable(); */
+
   /** Inserted by Angular inject() migration for backwards compatibility */
+  
   constructor(...args: unknown[]);
   constructor() {
     this.cvs = [
@@ -48,9 +52,34 @@ export class CvService {
    *
    */
   getCvs(): Observable<Cv[]> {
-    return this.http.get<Cv[]>(API.cv);
+    if (!this.cvs$) {
+      console.log('Fetching data from API');
+      this.cvs$ = this.http.get<Cv[]>(API.cv).pipe(
+        shareReplay(1) 
+      );
+    } else {
+      console.log('Using cached data');
+    }
+    return this.cvs$;
   }
+  
+  /*getCvs2(): Observable<Cv[]> {
+    return this.cvsSubject.pipe(
+      take(1),  
+      tap((cvs) => {
+        if (!cvs.length) {  
+          this.http.get<Cv[]>(API.cv).pipe(
+            tap((newCvs) => {
+              this.cvsSubject.next(newCvs);  
+              this.loadingSubject.next(false); 
+            })
+          ).subscribe();
+        } 
+        return EMPTY
+      })
+    );
 
+  }*/
   /**
    *
    * supprime un cv par son id de l'API
@@ -98,6 +127,7 @@ export class CvService {
    * @returns boolean
    */
   deleteCv(cv: Cv): boolean {
+ 
     const index = this.cvs.indexOf(cv);
     if (index > -1) {
       this.cvs.splice(index, 1);
