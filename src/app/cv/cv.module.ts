@@ -14,7 +14,7 @@ import {AuthGuard} from "../auth/guards/auth.guard";
 import {AutocompleteComponent} from "./autocomplete/autocomplete.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
-const routes: Routes = [{path: '', component: CvComponent, resolve: {cvs: cvResolver}}, {
+const routes: Routes = [{path: '', component: CvComponent}, {
   path: "add", component: AddCvComponent, canActivate: [AuthGuard]
 }, {
   path: ":id", component: DetailsCvComponent
