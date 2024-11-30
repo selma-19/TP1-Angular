@@ -4,10 +4,7 @@
 <ul *ngIf="filteredCvs$ | async as filteredCvs" class="list-group mt-2">
   <li
     *ngFor="let cv of filteredCvs; let isOdd = odd"
-    [ngClass]="{
-      'list-group-item-primary': isOdd,
-      'list-group-item-secondary': !isOdd
-    }"
+    
     class="list-group-item"
     [routerLink]="['/cv', cv.id]"
   >
