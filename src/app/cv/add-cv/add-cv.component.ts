@@ -6,7 +6,7 @@ import { ToastrService } from "ngx-toastr";
 import { APP_ROUTES } from "src/config/routes.config";
 import { Cv } from "../model/cv";
 import { JsonPipe } from "@angular/common";
-import {debounceTime, Subject, takeUntil, tap} from "rxjs";
+import {debounceTime, filter, Subject, takeUntil, tap} from "rxjs";
 
 @Component({
   selector: "app-add-cv",
@@ -41,6 +41,43 @@ export class AddCvComponent implements OnInit, OnDestroy{
       }),
       takeUntil(this.unsubscribe$))
       .subscribe();
+
+       
+      const draft = localStorage.getItem("SavedDraft");
+      const savedDraft = draft ? JSON.parse(draft) : {};
+      //console.log(this.form.controls)
+      Object.keys(this.form.controls).forEach((controlName) => {
+        const control = this.form.get(controlName);
+        control?.setValue(savedDraft[controlName] || null);
+      });
+
+      /*
+      //to save the whole form if valid
+      this.form.valueChanges.pipe(
+        filter(()=>this.form.valid),
+        takeUntil(this.unsubscribe$) 
+      ).subscribe(val=>localStorage.setItem("SavedDraft",JSON.stringify(val)));
+      */
+
+      
+      //to save each valid field
+      Object.keys(this.form.controls).forEach((controlName) => {
+        const control = this.form.get(controlName);
+        if (control) {
+          control.valueChanges.pipe(
+            tap(() => {
+              if (control.valid) {
+                savedDraft[controlName] = control.value;
+              } else {
+                delete savedDraft[controlName];
+              }
+              localStorage.setItem("SavedDraft", JSON.stringify(savedDraft));
+            }),
+            takeUntil(this.unsubscribe$) 
+          ).subscribe();
+        }
+      });
+
   }
   ngOnDestroy() {
     this.unsubscribe$.next();
