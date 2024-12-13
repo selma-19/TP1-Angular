@@ -12,8 +12,10 @@ import {RhComponent} from "./optimizationPattern/rh/rh.component";
 import {cvResolver} from "./cv/cv/cv-resolver";
 import {ProductsComponent} from "./products/products.component";
 import {CustomPreloadingStrategy} from "./CustomPreloadingStrategy";
+import {AddCvComponent} from "./cv/add-cv/add-cv.component";
 
-const routes: Route[] = [{path: "login", component: LoginComponent}, {path: "rh", component: RhComponent}, {
+const routes: Route[] = [
+  {path: "cv/add", component: AddCvComponent},{path: "login", component: LoginComponent}, {path: "rh", component: RhComponent}, {
   path: "cv",
   loadChildren: () => import('./cv/cv.module').then(m => m.CvModule),
   component: CvComponent,

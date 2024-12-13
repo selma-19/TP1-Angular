@@ -21,8 +21,8 @@ const routes: Routes = [{path: '', component: CvComponent}, {
 }];
 
 @NgModule({
-  declarations: [CvComponent, CvCardComponent, DetailsCvComponent, EmbaucheComponent, ItemComponent, ListComponent, AutocompleteComponent, AddCvComponent],
-  imports: [JsonPipe, FormsModule, ReactiveFormsModule, RouterLink, DefaultImagePipe, CommonModule, NgClass, NgStyle, UpperCasePipe, DatePipe, AsyncPipe, RouterModule.forChild(routes)]
+  declarations: [CvComponent, CvCardComponent, DetailsCvComponent, EmbaucheComponent, ItemComponent, ListComponent, AutocompleteComponent],
+  imports: [AddCvComponent,JsonPipe, FormsModule, ReactiveFormsModule, RouterLink, DefaultImagePipe, CommonModule, NgClass, NgStyle, UpperCasePipe, DatePipe, AsyncPipe, RouterModule.forChild(routes)]
 })
 export class CvModule {
 }
