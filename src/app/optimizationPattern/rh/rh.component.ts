@@ -1,4 +1,4 @@
-import {Component, OnInit, inject, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, inject, ChangeDetectionStrategy, ChangeDetectorRef, NgZone} from '@angular/core';
 import {User, UsersService} from "../users.service";
 import * as ChartJs from 'chart.js/auto';
 import { UserListComponent } from '../user-list/user-list.component';
@@ -12,6 +12,7 @@ import { UserListComponent } from '../user-list/user-list.component';
 })
 export class RhComponent implements OnInit {
   private userService = inject(UsersService);
+  private ngZone=inject(NgZone)
   oddUsers: User[];
   evenUsers: User[];
   chart: any;
@@ -28,27 +29,31 @@ export class RhComponent implements OnInit {
   addUser(list: User[], newUser: string) {
     this.userService.addUser(list, newUser);
     //update chart
-    this.chart.destroy()
-    this.createChart()
-
+    this.ngZone.runOutsideAngular(()=>{
+      this.chart.destroy()
+      this.createChart()
+    })
   }
   createChart(){
     const data = [
       { users: 'Workers', count: this.oddUsers.length },
       { users: 'Boss', count: this.evenUsers.length },
     ];
-    this.chart = new ChartJs.Chart("MyChart",
-    {
-      type: 'bar',
-        data: {
-          labels: data.map(row => row.users),
-        datasets: [
+    this.ngZone.runOutsideAngular(()=>{
+      this.chart = new ChartJs.Chart("MyChart",
         {
-          label: 'Entreprise stats',
-          data: data.map(row => row.count)
-        }
-      ]
-    }
-    });
+          type: 'bar',
+          data: {
+            labels: data.map(row => row.users),
+            datasets: [
+              {
+                label: 'Entreprise stats',
+                data: data.map(row => row.count)
+              }
+            ]
+          }
+        });
+    })
+
   }
 }
