@@ -11,7 +11,7 @@
   @for (user of users; track user) {
     <li
       class="list-group-item">
-      {{user.name}} : {{user.age}} [{{fibo(user.age)}}]
+      {{user.name}} : {{user.age}} [{{user.age|fibo}}]
     </li>
   }
 </ol>
