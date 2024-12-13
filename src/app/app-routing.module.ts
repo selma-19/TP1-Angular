@@ -16,8 +16,6 @@ import {CustomPreloadingStrategy} from "./CustomPreloadingStrategy";
 const routes: Route[] = [{path: "login", component: LoginComponent}, {path: "rh", component: RhComponent}, {
   path: "cv",
   loadChildren: () => import('./cv/cv.module').then(m => m.CvModule),
-  component: CvComponent,
-  resolve: {cvs: cvResolver},
   data: {preload: true}
 }, {
   path: "", component: FrontComponent, children: [{
