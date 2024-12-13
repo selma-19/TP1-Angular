@@ -5,7 +5,8 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { APP_ROUTES } from "src/config/routes.config";
 import { Cv } from "../model/cv";
-import { JsonPipe } from "@angular/common";
+import { CommonModule, JsonPipe, KeyValue } from "@angular/common";
+import { cinAsyncValidator } from "../validators/cinValidator";
 
 @Component({
     selector: "app-add-cv",
@@ -15,7 +16,8 @@ import { JsonPipe } from "@angular/common";
     imports: [
     FormsModule,
     ReactiveFormsModule,
-    JsonPipe
+    JsonPipe,
+    CommonModule,
 ],
 })
 export class AddCvComponent {
@@ -23,12 +25,18 @@ export class AddCvComponent {
   private router = inject(Router);
   private toastr = inject(ToastrService);
   private formBuilder = inject(FormBuilder);
+  private cinValidator = inject(cinAsyncValidator);
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
 
   constructor() {}
-
+ngOnInit(): void {
+  this.form.get('cin')?.valueChanges.subscribe((value) => {
+    console.log('CIN value changed:', value);
+    console.log('Form errors:', this.form.get('cin')?.errors);
+  });
+}
   form = this.formBuilder.group(
     {
       name: ["", Validators.required],
@@ -39,6 +47,8 @@ export class AddCvComponent {
         "",
         {
           validators: [Validators.required, Validators.pattern("[0-9]{8}")],
+          asyncValidators: [this.cinValidator.validate.bind(this.cinValidator)],
+          updateOn: "blur",
         },
       ],
       age: [
@@ -49,6 +59,22 @@ export class AddCvComponent {
       ],
     },
   );
+
+  getValidationMessage(error: KeyValue<string, any>): string | null {
+    if (!error) {
+      return null; // No errors
+    }
+  
+    if (error.key === 'required' && error.value === true) {
+      return 'This field is required.';
+    }
+  
+    if (error.key === 'pattern') {
+      return 'Please enter a valid format. (e.g., 8-digit number)';
+    }
+  
+    return error.key === 'customMessage' ? error.value : 'Invalid input.';
+  }
 
   addCv() {
     this.cvService.addCv(this.form.value as Cv).subscribe({

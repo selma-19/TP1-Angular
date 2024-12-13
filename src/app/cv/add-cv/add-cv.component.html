@@ -2,64 +2,35 @@
 <form [formGroup]="form">
   Name:
   <input type="text" class="form-control" formControlName="name" />
-  @if (form.get('name')?.errors && form.get('name')?.touched) {
-    <div
-      class="alert alert-danger"
-      >
-      Ce champ est obligatoire
-    </div>
-  }
+  <div
+    *ngIf="form.get('name')?.errors && form.get('name')?.touched"
+    class="alert alert-danger"
+  >
+    Ce champ est obligatoire
+  </div>
   Firstname:
   <input type="text" class="form-control" formControlName="firstname" /> Age:
   <input type="text" class="form-control" formControlName="age" /> Cin:
   <input type="text" class="form-control" formControlName="cin" />
-  @if (
-    form.errors && form.errors['cinFirstCars'] &&  form.get('cin')?.touched &&  form.get('age')?.touched
-    ) {
-    <div
-      class="alert alert-danger"
-      >
-      Cette Cin est invalide
-    </div>
-  }
+  <div
+    *ngIf="
+      form.errors && form.errors['cinFirstCars'] && cin?.touched && age?.touched
+    "
+    class="alert alert-danger"
+  >
+    Cette Cin est invalide
+  </div>
+  <div
+    *ngFor=" let error of cin?.errors | keyvalue"
+    class="alert alert-danger"
+  >
+    {{ getValidationMessage(error) }}
+  </div>
   Job: <input type="text" class="form-control" formControlName="job" /> Path:
   <input type="text" class="form-control" formControlName="path" />
 
   <button [disabled]="form.invalid" class="btn btn-primary" (click)="addCv()">
-    add cv
-  </button>
-</form>
-{{ form.errors | json }}
-
-<p>add-cv works!</p>
-<form [formGroup]="form">
-  Name:
-  <input type="text" class="form-control" formControlName="name" />
-  @if (form.get('name')?.errors && form.get('name')?.touched) {
-    <div
-      class="alert alert-danger"
-      >
-      Ce champ est obligatoire
-    </div>
-  }
-  Firstname:
-  <input type="text" class="form-control" formControlName="firstname" /> Age:
-  <input type="text" class="form-control" formControlName="age" /> Cin:
-  <input type="text" class="form-control" formControlName="cin" />
-  @if (
-    form.errors && form.errors['cinFirstCars'] && cin.touched && age.touched
-    ) {
-    <div
-      class="alert alert-danger"
-      >
-      Cette Cin est invalide
-    </div>
-  }
-  Job: <input type="text" class="form-control" formControlName="job" /> Path:
-  <input type="text" class="form-control" formControlName="path" />
-
-  <button [disabled]="form.invalid" class="btn btn-primary" (click)="addCv()">
-    add cv
+    Add CV
   </button>
 </form>
 {{ form.errors | json }}
