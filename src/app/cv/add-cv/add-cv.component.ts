@@ -69,10 +69,7 @@ export class AddCvComponent implements OnInit, OnDestroy{
   );
 
   addCv() {
-    if(this.form.get('path')?.disabled){
-      this.form.patchValue({path:''},{onlySelf:true, emitEvent:false});
-    }
-    this.cvService.addCv(this.form.value as Cv).subscribe({
+    this.cvService.addCv(this.form?.value as Cv).subscribe({
       next: (cv) => {
         this.router.navigate([APP_ROUTES.cv]);
         this.toastr.success(`Le cv ${cv.firstname} ${cv.name}`);
