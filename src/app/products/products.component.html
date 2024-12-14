@@ -4,7 +4,7 @@
     Product Number: {{productsList?.length}}
   </div>
   <div class="row">
-    @for (product of productsList; track product) {
+    @for (product of productsList; track product.id) {
       <div class="col-4">
         <img class="rounded-circle" src="{{product.thumbnail}}" width="150px" height="150px">
         {{product.title}}

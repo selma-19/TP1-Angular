@@ -1,13 +1,5 @@
 import {Component, inject, OnDestroy, OnInit} from "@angular/core";
-import {
-  AbstractControl,
-  FormBuilder,
-  Validators,
-  FormsModule,
-  ReactiveFormsModule,
-  ValidatorFn,
-  ValidationErrors
-} from "@angular/forms";
+import { AbstractControl, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CvService } from "../services/cv.service";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
@@ -15,7 +7,7 @@ import { APP_ROUTES } from "src/config/routes.config";
 import { Cv } from "../model/cv";
 import { JsonPipe } from "@angular/common";
 import {debounceTime, Subject, takeUntil, tap} from "rxjs";
-import {cinAgeValidator} from "../validators/cin-validator";
+
 @Component({
   selector: "app-add-cv",
   templateUrl: "./add-cv.component.html",
@@ -73,8 +65,7 @@ export class AddCvComponent implements OnInit, OnDestroy{
           validators: [Validators.required],
         },
       ],
-    },    { validators: cinAgeValidator()}
-
+    },
   );
 
   addCv() {
