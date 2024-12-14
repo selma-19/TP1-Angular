@@ -7,6 +7,7 @@ import { APP_ROUTES } from "src/config/routes.config";
 import { Cv } from "../model/cv";
 import { JsonPipe } from "@angular/common";
 import {debounceTime, Subject, takeUntil, tap} from "rxjs";
+import {cinAgeValidator} from "../validators/cin-validator";
 
 @Component({
   selector: "app-add-cv",
@@ -66,6 +67,8 @@ export class AddCvComponent implements OnInit, OnDestroy{
         },
       ],
     },
+    { validators: cinAgeValidator()}
+
   );
 
   addCv() {
